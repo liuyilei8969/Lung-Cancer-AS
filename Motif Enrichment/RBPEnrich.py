@@ -63,9 +63,9 @@ def save_results(results, output_file):
     results.to_csv(output_file, sep="\t", index=False)
 
 if __name__ == "__main__":
-    fg_file = "DS_RBP_results.txt"  # 前景文件路径
-    bg_file = "../result/7motif/all/7_dn_all_RBP_results.txt"  # 背景文件路径
-    output_file = "../result/7motif/Aup/Aup_dn_enrich_RBP.txt"
+    fg_file = "DS_RBP_exon_results.txt"  # 前景文件路径
+    bg_file = "All_RBP_exon_results.txt"  # 背景文件路径
+    output_file = "DS_exon_enrich_RBP.txt"
 
     # 读取数据
     fg_data, bg_data = read_data(fg_file, bg_file)
