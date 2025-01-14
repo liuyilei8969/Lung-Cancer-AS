@@ -31,12 +31,6 @@ AS_filtered <- t(apply(AS, 1, function(x) {
 
 AS_filtered <- as.data.frame(t(AS_filtered))
 
-# 读取DS事件
-
-DS <- read.xlsx("/path/to/DS/events.xlsx",sheet =2)
-DS <- c(DS$up,DS$dn)
-DS <- na.omit(DS)
-
 AS_filtered$Group <- annotation$Group
 #AS_filtered$Group <- annotation$Subtype # Subtype-Specific 需要运行此行
 AS_filtered$Group <- as.factor(AS_filtered$Group)
