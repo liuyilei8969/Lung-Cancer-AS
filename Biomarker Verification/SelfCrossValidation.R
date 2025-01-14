@@ -1,7 +1,9 @@
 library(openxlsx)
 library(dplyr)
 library(stringr)
-library(ggplot2)
+library(ROCR)
+library(caret)
+
 
 # 读取样本信息
 annotation <- read.xlsx('/path/to/sample/information.xlsx') # 准备xlsx表格，有样本名称和对应亚型的信息
