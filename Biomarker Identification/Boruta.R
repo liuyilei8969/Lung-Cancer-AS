@@ -53,5 +53,5 @@ feature_status <- attStats(boruta_result)
 # 提取被确认的重要特征
 confirmed_features <- feature_status %>% filter(decision == "Confirmed") %>% filter(normHits==1) %>%rownames()
 
-markers <- intersect(confirmed_features,DS)
-print (markers)
+# 保存
+write.xlsx(confirmed_features,'Boruta_features.xlsx')
