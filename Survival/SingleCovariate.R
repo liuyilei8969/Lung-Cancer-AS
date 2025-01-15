@@ -1,3 +1,7 @@
+library("survival")
+library("survminer")
+library("openxlsx")
+
 # 加载数据，有样本名称，变量值，OS，OS.time
 survival <- read.xlsx('survival.xlsx')
 rownames(survival) <- survival$Sample
