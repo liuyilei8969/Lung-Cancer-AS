@@ -86,11 +86,6 @@ python LungCancerAS/MotifEnrichment/RBPEnrich.py
 
 ### Part of RBP regulation analysis, here you are intereted in the RBPs' targets
 
-```bash
-# please change the path as your sample path in the analysis scripts
-bash LungCancerAS/MotifEnrichment/GrepDSPosition.sh
-```
-
 ```python
 # please change the path as your sample path in the analysis scripts
 python LungCancerAS/RBPTargetEnrich/GenExS.py
