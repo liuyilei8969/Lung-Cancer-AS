@@ -1,0 +1,15 @@
+# requirements.txt
+pandas
+biopython
+collections
+scipy
+math
+statsmodels
+r-boruta
+r-dplyr
+r-openxlsx
+r-rocr
+r-caret
+r-ggplot2
+r-survival
+r-survminer
