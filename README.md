@@ -33,6 +33,10 @@ pip install -r requirements.txt
 
 ### RNA-Seq analysis & quantification
 
+`QC.sh`: Quality control to ensure your samples is suitable for downstream analysis.
+`Quantification.sh`: Import Quantas pipeline to quantify both gene expression and alternative splicing.
+`Analysis.sh`: Figure out differential expressed genes and differential spliced events between two sample-groups.
+
 ```bash
 # please change the path as your sample path in the analysis scripts
 bash LungCancerAS/RNA-seqAnalysis/QC.sh
