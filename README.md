@@ -125,6 +125,10 @@ python LungCancerAS/RBPTargetEnrich/Enrichment.py
 
 ```
 
+## Test Data
+
+Small sample data for testing purposes can be found in the `test/` directory.
+
 
 
 
