@@ -2,29 +2,28 @@ library("survival")
 library("survminer")
 library("openxlsx")
 
-# 加载数据，有样本名称，变量值，OS，OS.time
+# Load data, including sample names, variable values, OS, and OS.time
 survival <- read.xlsx('survival.xlsx')
-rownames(survival) <- survival$Sample
+rownames(survival) <- survival$Sample  # Set the sample names as row names
 
-# 去除 NA 值过多的变量
-survival <- survival[ ,which(colMeans(!is.na(survival)) > 0.8) ]
-covariates <- colnames(survival)
-covariates = covariates[,-c('Sample','OS','OS.time')]
+# Remove variables with too many NA values (keep those with less than 20% missing data)
+survival <- survival[, which(colMeans(!is.na(survival)) > 0.8)]  # Filter out columns with more than 20% missing data
+covariates <- colnames(survival)  # Extract column names (covariates)
+covariates = covariates[-c('Sample', 'OS', 'OS.time')]  # Remove 'Sample', 'OS', and 'OS.time' from covariates
 
-# 初始化结果
-result <- data.frame(matrix(ncol = 2,nrow = length(covariates)))
-rownames(result) = covariates
-colnames(result) = c('Coefficient','pval')
+# Initialize results data frame
+result <- data.frame(matrix(ncol = 2, nrow = length(covariates)))  # Create a data frame with 2 columns and rows equal to the number of covariates
+rownames(result) = covariates  # Set row names as covariates
+colnames(result) = c('Coefficient', 'pval')  # Set column names to 'Coefficient' and 'pval'
 
-# 遍历每个变量进行单变量 Cox 分析
-surv_obj <- Surv(time = survival$OS.time, event = survival$OS)
-for (var in covariates){
-  cox_model <- coxph(surv_obj ~ survival[,var], data = survival)
-  result[var,1] <- log(exp(coef(cox_model)))
-  result[var,2] <- summary(cox_model)$coefficients[, "Pr(>|z|)"]
+# Perform univariate Cox regression for each covariate
+surv_obj <- Surv(time = survival$OS.time, event = survival$OS)  # Define the survival object
+for (var in covariates) {  # Loop over each covariate
+  cox_model <- coxph(surv_obj ~ survival[, var], data = survival)  # Fit Cox regression model
+  result[var, 1] <- log(exp(coef(cox_model)))  # Store the log of the coefficient
+  result[var, 2] <- summary(cox_model)$coefficients[, "Pr(>|z|)"]  # Store the p-value
 }
 
-# 多重检验校正
-result$FDR = p.adjust(result_df$pval,method = 'fdr')
-result$sig = ifelse(result_df$FDR <= 0.05,'sig','notsig')
-
+# Multiple testing correction using FDR
+result$FDR = p.adjust(result$pval, method = 'fdr')  # Apply FDR correction to p-values
+result$sig = ifelse(result$FDR <= 0.05, 'sig', 'notsig')  # Mark significant variables (FDR ≤ 0.05)
