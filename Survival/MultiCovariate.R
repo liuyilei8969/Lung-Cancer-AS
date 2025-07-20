@@ -2,23 +2,23 @@ library("survival")
 library("survminer")
 library("openxlsx")
 
-# 加载数据，有样本名称，变量值，OS，OS.time
+# Load data, including sample names, variable values, OS, and OS.time
 survival <- read.xlsx('survival.xlsx')
-rownames(survival) <- survival$Sample
+rownames(survival) <- survival$Sample  # Set the sample names as row names
 
-# 去除 NA 值过多的变量
-survival <- survival[ ,which(colMeans(!is.na(survival)) > 0.8) ]
+# Remove variables with too many NA values (keep those with less than 20% missing data)
+survival <- survival[, which(colMeans(!is.na(survival)) > 0.8)]
 covariates <- colnames(survival)
-covariates = covariates[,-c('Sample','OS','OS.time')]
+covariates = covariates[-c('Sample', 'OS', 'OS.time')]  # Remove 'Sample', 'OS', and 'OS.time' from covariates
 
-# 遍历每个变量进行单变量 Cox 分析
-surv_obj <- Surv(time = survival$OS.time, event = survival$OS)
-cox_model <- coxph(surv_obj ~., data = survival[,-c('Sample','OS','OS.time')])
+# Perform univariate Cox analysis for each variable
+surv_obj <- Surv(time = survival$OS.time, event = survival$OS)  # Define survival object
+cox_model <- coxph(surv_obj ~ ., data = survival[, -c('Sample', 'OS', 'OS.time')])  # Fit Cox model
 
-# 处理结果
-result <- cbind(coef(cox_model),summary(cox_model)$coefficients[, "Pr(>|z|)"])
-rownames(result) <- covariates
-colnames(result) <- c('Coefficient','pval')
-result <- as.data.frame(result)
-result$FDR <- p.adjust(result$pval,method = 'fdr')
-result$sig <- ifelse(result_df$FDR <= 0.05,'sig','notsig')
+# Process the results
+result <- cbind(coef(cox_model), summary(cox_model)$coefficients[, "Pr(>|z|)"])  # Extract coefficients and p-values
+rownames(result) <- covariates  # Set covariates as row names
+colnames(result) <- c('Coefficient', 'pval')  # Assign column names
+result <- as.data.frame(result)  # Convert to data frame
+result$FDR <- p.adjust(result$pval, method = 'fdr')  # Apply FDR correction
+result$sig <- ifelse(result$FDR <= 0.05, 'sig', 'notsig')  # Mark significant variables
