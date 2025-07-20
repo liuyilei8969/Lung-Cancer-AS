@@ -4,7 +4,7 @@ import pandas as pd
 
 def read_data(fg_file, bg_file):
     """
-    读取fg和bg文件，返回数据框。
+    Reads the foreground (fg) and background (bg) files and returns the dataframes.
     """
     fg_data = pd.read_csv(fg_file, sep="\t")
     bg_data = pd.read_csv(bg_file, sep="\t")
@@ -12,15 +12,14 @@ def read_data(fg_file, bg_file):
 
 def calculate_enrichment(fg_data, bg_data):
     """
-    计算富集分析结果。
-    参数：
-        fg_data: 前景数据，包含Motif和Count列。
-        bg_data: 背景数据，包含Motif和Count列。
-        test_method: 使用的统计方法（binom或hyperg）。
-    返回：
-        结果数据框，包含Motif、fg_count、bg_count、log2FC、pval、zscore列。
+    Calculates enrichment analysis results.
+    Parameters:
+        fg_data: Foreground data containing Motif and Count columns.
+        bg_data: Background data containing Motif and Count columns.
+    Returns:
+        A dataframe with columns: Motif, fg_count, bg_count, log2FC, pval, zscore.
     """
-    # 合并fg和bg数据
+    # Merge foreground and background data
     merged_data = pd.merge(fg_data, bg_data, on="Motif", how="outer", suffixes=("_fg", "_bg")).fillna(0)
     fg_sum = merged_data["Count_fg"].sum()
     bg_sum = merged_data["Count_bg"].sum()
@@ -32,16 +31,15 @@ def calculate_enrichment(fg_data, bg_data):
         fg_count = row["Count_fg"]
         bg_count = row["Count_bg"]
 
-        # 计算log2FC
+        # Calculate log2FC (log fold change)
         log2FC = (fg_sum == 0 or bg_count - fg_count == 0 or fg_count == 0 or bg_sum - fg_sum == 0)
         log2FC = math.log2(fg_count * (bg_sum - fg_sum) / (fg_sum * (bg_count - fg_count))) if not log2FC else 'NA'
 
-        # 计算zscore
+        # Calculate z-score
         r = fg_sum / bg_sum
         zscore = (fg_count - bg_count * r) / math.sqrt(bg_count * r * (1 - r))
 
-        # 计算p值
-
+        # Calculate p-value using hypergeometric distribution
         pval_hyperg = stats.hypergeom.sf(fg_count - 1, bg_sum, bg_count, fg_sum)
 
         results.append({
@@ -57,22 +55,22 @@ def calculate_enrichment(fg_data, bg_data):
 
 def save_results(results, output_file):
     """
-    保存结果到文件。
+    Saves the results to a file.
     """
     results.to_csv(output_file, sep="\t", index=False)
 
 if __name__ == "__main__":
-    fg_file = "DS_exon_motif_results.txt"  # 前景文件路径，或为DS_downstream_motif_results.txt，DS_upstream_motif_results.txt
-    bg_file = "All_exon_motif_results.txt"  # 背景文件路径，或为All_downstream_motif_results.txt，All_upstream_motif_results.txt
-    output_file = "DS_exon_enrich.txt"  #或为DS_downstream_enrich.txt，DS_upstream_enrich.txt
+    fg_file = "DS_exon_motif_results.txt"  # Foreground file path (e.g., DS_downstream_motif_results.txt, DS_upstream_motif_results.txt)
+    bg_file = "All_exon_motif_results.txt"  # Background file path (e.g., All_downstream_motif_results.txt, All_upstream_motif_results.txt)
+    output_file = "DS_exon_enrich.txt"  # Output file path (e.g., DS_downstream_enrich.txt, DS_upstream_enrich.txt)
 
-    # 读取数据
+    # Read data
     fg_data, bg_data = read_data(fg_file, bg_file)
 
-    # 计算富集分析结果
+    # Calculate enrichment analysis results
     results = calculate_enrichment(fg_data, bg_data)
 
-    # 保存结果
+    # Save the results
     save_results(results, output_file)
 
     print(f"Enrichment analysis results saved to {output_file}")
