@@ -1,22 +1,24 @@
 import pandas as pd
 
-# 读取ExS矩阵
-rbp_matrix = pd.read_csv('DExDS.txt', sep = '\t') # 或者其他的ExS矩阵
-# 创建一个空的字典来存储每个RBP的activation和repression计数
+# Read the ExS matrix
+rbp_matrix = pd.read_csv('DExDS.txt', sep='\t')  # Or use other ExS matrices
+
+# Initialize an empty dictionary to store activation and repression counts for each RBP
 activation_repression_count = {}
 
-# 遍历计数
-for rbp in rbp_matrix.columns[1:]:  # 跳过第一列（剪接事件名称）
-    # 统计每个RBP列的 repression 和 activation 的数量
+# Loop through each RBP column (skip the first column, which contains splicing event names)
+for rbp in rbp_matrix.columns[1:]:  # Skipping the first column ('Splicing Event')
+    # Count the number of activations (1) and repressions (-1) for each RBP
     repression_count = (rbp_matrix[rbp] == -1).sum()
     activation_count = (rbp_matrix[rbp] == 1).sum()
 
-    # 将统计结果存储到字典中
+    # Store the counts in the dictionary
     activation_repression_count[rbp] = {'activation': activation_count, 'repression': repression_count}
-    #activation_repression_count[rbp] = {'total': activation_count + repression_count}
 
-# 将字典转换为DataFrame
+# Convert the dictionary to a DataFrame
 activation_repression_df = pd.DataFrame.from_dict(activation_repression_count, orient='index')
 
-# 输出结果
-activation_repression_df.to_csv('DE_DS_count.txt', sep = '\t')
+# Save the result to a tab-separated file
+activation_repression_df.to_csv('DE_DS_count.txt', sep='\t')
+
+print("Activation and repression counts have been saved to 'DE_DS_count.txt'")
