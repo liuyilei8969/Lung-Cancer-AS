@@ -49,9 +49,9 @@ bash LungCancerAS/RNA-seqAnalysis/Analysis.sh
 ### Figure out AS biomarkers to separate two groups in your data    
   
 In this section, you should prepare the following input files:  
-`information.xlsx`: An Excel file containing two columns. The first column is "Filename" and the second is "Subtype". You may refer to the example provided in test/information.xlsx.
-`AS_matrix.txt`: A text file generated in the previous step, representing the PSI matrix. You can refer to `test/AS_matrix.txt`, which contains PSI values for 500 alternative splicing events across 20 samples used in our study.
-`splicing_diff`.txt: A text file also generated in the previous step, showing differential splicing analysis results between tumor and adjacent normal samples. An example is available in `test/splicing_diff.txt`, which includes results of comparing tumor and normal adjacent for 500 events in our study.
+`information.xlsx`: An Excel file containing two columns. The first column is "Filename" and the second is "Subtype". You may refer to the example provided in test/information.xlsx.   
+`AS_matrix.txt`: A text file generated in the previous step, representing the PSI matrix. You can refer to `test/AS_matrix.txt`, which contains PSI values for 500 alternative splicing events across 20 samples used in our study.   
+`splicing_diff`.txt: A text file also generated in the previous step, showing differential splicing analysis results between tumor and adjacent normal samples. An example is available in `test/splicing_diff.txt`, which includes results of comparing tumor and normal adjacent for 500 events in our study.   
 
 `FilterDS.R`: We filter differential spliced events in lung cancer, you can adjust your standard and filter on your own.  
 `Boruta.R`: Import boruta to figure out candidate features as biomarkers.  
