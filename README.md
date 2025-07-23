@@ -69,7 +69,7 @@ Rscript LungCancerAS/BiomarkerIdentification/Overlap.R
 In this section, you should prepare the following input files:  
 `information.xlsx`: An Excel file containing two columns. The first column is "Filename" and the second is "Subtype". You may refer to the example provided in `test/information.xlsx`.  
 `AS_matrix.txt`: A text file generated in the previous step, representing the PSI matrix. You can refer to `test/AS_matrix.txt`, which contains PSI values for 500 alternative splicing events across 20 samples used in our study.  
-`markers.xlsx`:  An Excel file containing event ID of the markers you have found in the previous step. Please refer to `test/NTmarkers.xlsx` or `test/SubtypeMarkers.xlsx`.   
+`markers.xlsx`:  An Excel file containing event ID of the markers you have found in the previous step.      
   
 `MDS.R`: Multidimensional scaling for checking biomarkers' behavior.  
 `SelfCrossValidation.R`: k-fold cross validation with biomarkers and randomly selected AS events to valuate biomarkers' performance.  
@@ -101,6 +101,12 @@ Rscript LungCancerAS/Survival/SurvivalCurve.R
 
 ### Part of RBP regulation analysis, here you are intereted in the motifs on the spliced RNA sequences
 
+In this section, you should prepare the following input files:  
+`Hs.seq.all.cass.chrom.can.exon.bed`:  A BED file containing event IDs along with the start and end positions of the alternatively spliced exons. You may refer to the example `test/Hs.seq.all.cass.chrom.can.exon.bed`, which includes 500 events.   
+`hg19.fa`: Reference genome. The reference genome used in our study was downloaded from the UCSC Genome Browser, with the accession number GCA_000001405.1.            
+`motif-RBP.txt`: A text file containing two columns: the first column is motif, and the second column is the corresponding RBP. You may refer to the example file `test/motif-RBP.txt`.
+`up_events.txt`,`dn_events.txt`: Text files summarizing the results of DS analyses. These files can be generated using the provided scripts in the first section.     
+
 `GrepDSPosition.sh`: Grep DS exons' position and save as a bed file.  
 
 ```bash
@@ -125,6 +131,11 @@ python LungCancerAS/MotifEnrichment/RBPEnrich.py
 
 ### Part of RBP regulation analysis, here you are intereted in the RBPs' targets
 
+In this section, you should prepare the following input files:  
+`Hs.seq.all.cass.chrom.can.exon.bed`:  A BED file containing event IDs along with the start and end positions of the alternatively spliced exons. You may refer to the example `test/Hs.seq.all.cass.chrom.can.exon.bed`, which includes 500 events.   
+`ENCODE_DS/`: A directory containing differential splicing results from ENCODE KD RNA-Seq data. Please download the raw data from https://www.encodeproject.org/ and follow the procedure described in the first section to perform the DS analysis.        
+`up_events.txt`,`dn_events.txt`, `up_RBP.txt`, `dn_RBP.txt`: Text files summarizing the results of DS and DE analyses. These files can be generated using the provided scripts in the first section.    
+
 `GenExS.py`: Generate events and splicing factor relationship matrix based on the DS results of RBP-preturbanced cell line, with 0 representing for no relationship, 1 for activation and -1 for repression.  
 `GenDExDS`: Generate a smaller matrix than `GenExS.py`, since only DE splicing factor and DS events are taken into consideration.  
 `Count.py`: Summarize how many events are activated or repressed by a splicing factor. If you are only concerned about the consistent regulation-relationship, you can filter the ExS matrix.  
@@ -138,10 +149,6 @@ python LungCancerAS/RBPTargetEnrich/Count.py
 python LungCancerAS/RBPTargetEnrich/Enrichment.py
 
 ```
-
-## Test Data
-
-Small sample data for testing purposes can be found in the `test/` directory.
 
 
 
