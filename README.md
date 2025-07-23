@@ -31,8 +31,10 @@ cd LungCancerAS/
 pip install -r requirements.txt
 ```
 
-### RNA-Seq analysis & quantification
+### RNA-Seq analysis & quantification  
 
+In this section, you should prepare FASTQ or FASTQ.GZ files of your samples as input. If you would like to reproduce our results, please download the raw data from the National Genomics Data Center (NGDC), as recommended in the "Data and Code Availability" section of our paper.  
+  
 `QC.sh`: Quality control to ensure your samples is suitable for downstream analysis.  
 `Quantification.sh`: Import Quantas pipeline to quantify both gene expression and alternative splicing.  
 `Analysis.sh`: Figure out differential expressed genes and differential spliced events between two groups.  
@@ -44,7 +46,12 @@ bash LungCancerAS/RNA-seqAnalysis/Quatification.sh
 bash LungCancerAS/RNA-seqAnalysis/Analysis.sh
 ```
 
-### Figure out AS biomarkers to separate two groups in your data
+### Figure out AS biomarkers to separate two groups in your data    
+  
+In this section, you should prepare the following input files:  
+`information.xlsx`: An Excel file containing two columns. The first column is "Filename" and the second is "Subtype". You may refer to the example provided in test/information.xlsx.
+`AS_matrix.txt`: A text file generated in the previous step, representing the PSI matrix. You can refer to `test/AS_matrix.txt`, which contains PSI values for 500 alternative splicing events across 20 samples used in our study.
+`splicing_diff`.txt: A text file also generated in the previous step, showing differential splicing analysis results between tumor and adjacent normal samples. An example is available in `test/splicing_diff.txt`, which includes results of comparing tumor and normal adjacent for 500 events in our study.
 
 `FilterDS.R`: We filter differential spliced events in lung cancer, you can adjust your standard and filter on your own.  
 `Boruta.R`: Import boruta to figure out candidate features as biomarkers.  
@@ -59,6 +66,11 @@ Rscript LungCancerAS/BiomarkerIdentification/Overlap.R
 
 ### Verify your AS biomarkers in your own data or public datasets
 
+In this section, you should prepare the following input files:  
+`information.xlsx`: An Excel file containing two columns. The first column is "Filename" and the second is "Subtype". You may refer to the example provided in `test/information.xlsx`.  
+`AS_matrix.txt`: A text file generated in the previous step, representing the PSI matrix. You can refer to `test/AS_matrix.txt`, which contains PSI values for 500 alternative splicing events across 20 samples used in our study.  
+`markers.xlsx`:  An Excel file containing event ID of the markers you have found in the previous step. Please refer to `test/NTmarkers.xlsx` or `test/SubtypeMarkers.xlsx`.   
+  
 `MDS.R`: Multidimensional scaling for checking biomarkers' behavior.  
 `SelfCrossValidation.R`: k-fold cross validation with biomarkers and randomly selected AS events to valuate biomarkers' performance.  
 `CrossValidationAcrossDatasets.R`: k-fold cross validation with biomarkers in public datasets.  
@@ -71,6 +83,8 @@ Rscript LungCancerAS/BiomarkerVerification/SelfCrossValidation.R
 ```
 
 ### Check whether your AS biomarkers have prognostic value
+
+In this section, you should prepare a `survival.xlsx`, which is an Excel spreadsheet containing the following columns: sample names, variable values, OS (overall survival status), and OS.time (overall survival time). We obtained these data from https://xenabrowser.net/datapages/.  
 
 `SingleCovariate.R`: Check whether single AS biomarker has prognostic value.  
 `MultiCovariate.R`: Check whether a combination of AS biomarkers has prognostic value.  
