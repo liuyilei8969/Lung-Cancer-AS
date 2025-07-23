@@ -62,7 +62,7 @@ for (fold in folds) {
   i = i + 1
 }
 ========================================================================================================================================
-# Use the script from Biomarker Identification to find features for each fold from the trainlst, saving the results in markerlst
+# Run the script from Biomarker Identification to find features for each fold from the trainlst, saving the results in markerlst
 ========================================================================================================================================
 i = 1
 for (fold in folds) {
