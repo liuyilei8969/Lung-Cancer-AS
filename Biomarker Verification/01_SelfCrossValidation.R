@@ -12,7 +12,7 @@ annotation <- as.data.frame(annotation)
 rownames(annotation) <- annotation$Sample_id
 
 # Read the AS matrix file
-AS <- read.table('splicing_matrix.txt', header = TRUE, sep = '\t')
+AS <- read.table('AS_matrix.txt', header = TRUE, sep = '\t')
 rownames(AS) <- AS$`#event_id`
 AS <- AS[, c(-1, -2)]
 
