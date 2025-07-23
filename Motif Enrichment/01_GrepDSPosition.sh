@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cat DSname.txt | while read line; do
+cat upevent.txt | while read line; do  # maybe dnevent.txt
 grep ${line} Hs.seq.all.cass.chrom.can.exon.bed >> DSposition.txt
 done
