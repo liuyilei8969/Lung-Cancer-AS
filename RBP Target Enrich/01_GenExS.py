@@ -3,7 +3,7 @@ import pandas as pd
 from collections import defaultdict
 
 # Define folder path
-folder_path = "/path/to/DS/result"
+folder_path = "/path/to/ENCODE_DS/result"
 
 # Initialize data structures to store RBP and target data
 rbp_target_map = defaultdict(lambda: defaultdict(list))
