@@ -1,7 +1,7 @@
 library(openxlsx)
 
 # Read DS events
-DS <- read.xlsx("/path/to/DS/events.xlsx", sheet = 2)
+DS <- read.xlsx("/path/to/DS/events.xlsx")
 DS <- c(DS$up, DS$dn)
 DS <- na.omit(DS)
 
