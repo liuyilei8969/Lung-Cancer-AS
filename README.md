@@ -104,7 +104,7 @@ Rscript LungCancerAS/Survival/SurvivalCurve.R
 In this section, you should prepare the following input files:  
 `Hs.seq.all.cass.chrom.can.exon.bed`:  A BED file containing event IDs along with the start and end positions of the alternatively spliced exons. You may refer to the example `test/Hs.seq.all.cass.chrom.can.exon.bed`, which includes 500 events.   
 `hg19.fa`: Reference genome. The reference genome used in our study was downloaded from the UCSC Genome Browser, with the accession number GCA_000001405.1.            
-`motif-RBP.txt`: A text file containing two columns: the first column is motif, and the second column is the corresponding RBP. You may refer to the example file `test/motif-RBP.txt`.
+`motif-RBP.txt`: A text file containing two columns: the first column is motif, and the second column is the corresponding RBP. You may refer to the example file `test/motif-RBP.txt`.   
 `up_events.txt`,`dn_events.txt`: Text files summarizing the results of DS analyses. These files can be generated using the provided scripts in the first section.     
 
 `GrepDSPosition.sh`: Grep DS exons' position and save as a bed file.  
