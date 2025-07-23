@@ -12,7 +12,7 @@ rownames(annotation) <- annotation$Sample_id
 #annotation <- annotation[annotation$Group == 'T', ] # Subtype-Specific - Uncomment this line if needed
 
 # Read the AS matrix
-AS <- read.table('/path/to/splicing_matrix.txt', header = TRUE, sep = '\t')
+AS <- read.table('/path/to/AS_matrix.txt', header = TRUE, sep = '\t')
 rownames(AS) <- AS$`#event_id`
 AS <- AS[, c(-1, -2)]
 #AS <- AS[, str_sub(colnames(AS), -1) == 'T'] # Subtype-Specific - Uncomment this line if needed
