@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 
 ### RNA-Seq analysis & quantification  
-
+- **Input files required:**  
 In this section, you should prepare FASTQ or FASTQ.GZ files of your samples as input. If you would like to reproduce our results, please download the raw data from the National Genomics Data Center (NGDC), as recommended in the "Data and Code Availability" section of our paper.  
 
 - **Scripts:**   
